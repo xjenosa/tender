@@ -20,9 +20,21 @@ their name below and writes their own section of this file.
 | Track | Owns |
 | --- | --- |
 | A, the frame | the app, its pages and this repository's rules: Max (`xjenosa`) |
-| B, the source | reading the saved CIVD pages |
+| B, the source | reading the saved CIVD pages: Ken (`Kenneth88880`) |
 | C, the filter | the keyword list and how it is scored |
 | D, the model | the model step and the evaluation |
 
 The rules every contributor follows, person or agent, are in `AGENTS.md`, and
 what "done" means is in `docs/Acceptance.md`.
+
+## B, the source
+
+`src/scraper.py` reads the two CIVD listing pages saved in `fixtures/`: each
+card's title, buyer, closing date, goods or services, and its first attachment
+id, which identifies the listing (ADR 0016). Refresh reads both pages, and
+nothing reaches the live site (ADR 0002).
+
+- **Check it:** `python -m unittest tests.test_scraper`.
+- **List types 2 and 3** were read by hand for two weeks in October 2026. Type 2
+  was empty and type 3 held only the yearly procurement-list letter, so the app
+  reads type 1 alone (ADR 0016).
