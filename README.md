@@ -21,7 +21,7 @@ their name below and writes their own section of this file.
 | --- | --- |
 | A, the frame | the app, its pages and this repository's rules: Max (`xjenosa`) |
 | B, the source | reading the saved CIVD pages: Ken (`Kenneth88880`) |
-| C, the filter | the keyword list and how it is scored |
+| C, the filter | the keyword list and how it is scored: Vansh (`vanshbarot08`) |
 | D, the model | the model step and the evaluation |
 
 The rules every contributor follows, person or agent, are in `AGENTS.md`, and
@@ -38,3 +38,20 @@ nothing reaches the live site (ADR 0002).
 - **List types 2 and 3** were read by hand for two weeks in October 2026. Type 2
   was empty and type 3 held only the yearly procurement-list letter, so the app
   reads type 1 alone (ADR 0016).
+
+## C, the filter
+
+`src/tender_filter.py` is the keyword gate: a listing whose title matches a
+keyword goes straight to Bidding, and the model never sees it (ADR 0003).
+`src/db.py` keeps the keywords, learns new ones when a card moves to Submitted
+(ADR 0004), and holds the listings.
+
+- **The keyword list here is a short generic example** (ADR 0015). Put your own
+  in Settings.
+- **Score a list:** `python tools/gate_terms.py --labels your_labels.csv` prints
+  what each term caught and let through. The labels file stays on your machine.
+- **Dates run from 11 October 2026,** the day the two pages were saved, so a
+  listing closes on the same day whenever the app runs (ADR 0019).
+- **Check it:** `python -m unittest tests.test_filter`.
+- **What we found:** on our 214 labelled listings, the longer list the research
+  used caught 2 of the 4 relevant ones and let through 14 others.
